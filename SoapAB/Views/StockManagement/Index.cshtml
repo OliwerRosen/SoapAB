@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+$(document).ready(function() {  
+            var ArticleId = [];  
+            var DateArrivedToStock = [];  
+            var ArticleTypeId = [];  
+            $.ajax({  
+                type: "POST",  
+                url: "../StockManagement/Index",  
+                data: "{}",  
+                contentType: "application/json; charset=utf-8",  
+                dataType: "json",  
+                async: true,  
+                success: function(result) {  
+                    $.each(result, function(key, item) {  
+                        ArticleId.push(item.ArticleId);  
+                        DateArrivedToStock.push(item.DateArrivedToStock);  
+                        ArticleTypeId.push(item.ArticleTypeId);  
+                    });  
+                    loadChart(ArticleId, DateArrivedToStock, ArticleTypeId);  
+                },  
+                error: function(errormessage) {  
+                    $('#h2').html(errormessage.responseText);  
+                    return false;  
+                }  
+            });  
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+    <p class="highcharts-description">
+        This pie chart shows how the chart legend can be used to provide
+        information about the individual slices.
+    </p>
+</figure>
+
+<div class="container">  
+    <h2 id="h2">Index</h2>  
+    <figure class="highcharts-figure container" >  
+        <div id="container-fluid" class="container-fluid"></div>  
+        <p class="highcharts-description">  
+            A basic column chart .  
+        </p>  
+    </figure>  
+</div>  
